@@ -1,0 +1,20 @@
+server:
+  port: 8000
+
+zuul:
+  sensitive-headers:
+  - Cookie
+  - Set-Cookie
+  routes:
+    data: # The data service (an imaginary microservice that is called data)
+      path: /data/**
+      url: http://localhost:8082/data
+    auth: # The auth service
+      path: /auth/**
+      url: http://localhost:8081/auth
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: ${signing.key}
